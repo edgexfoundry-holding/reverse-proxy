@@ -1,0 +1,43 @@
+# This is a TOML config file for edgexsecurity service.
+
+title = "EdgeX security service config file"
+
+[kongurl]
+server = "localhost"
+adminport = "8001"
+applicationport = "8000"
+
+[kongadmin]
+username = "administrator"
+password = "changeme"
+
+[kongsslcerts]
+certpath = "edgex.com.crt"
+keypath = "edgex.com.key"
+snis = "edgex.com"
+
+[edgexservices]
+	[edgexservices.coredata]
+		name = "coredata"
+		host = "localhost"
+		port = "48080"
+		protocol = "http"
+	
+	[edgexservices.metadata]
+		name = "metadata"
+		host = "localhost"
+		port = "48081"
+		protocol = "http"
+	
+	[edgexservices.command]
+		name = "command"
+		host = "localhost"
+		port = "48082"
+		protocol = "http"
+	
+	[edgexservices.notifcations]
+		name = "notifications"
+		host = "localhost"
+		port = "48060"
+		protocol = "http"
+		
