@@ -1,0 +1,7 @@
+.idea/
+vendor
+glide.lock
+*.DS_Store
+
+# binary files
+edgex-proxy
