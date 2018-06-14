@@ -1,20 +1,9 @@
-<<<<<<< HEAD
 .idea/
-.vscode/
 vendor
 glide.lock
 *.DS_Store
 
 # binary files
-edgex-proxy
-=======
-+.idea/
-+vendor
-+glide.lock
-+*.DS_Store
-+
-+# binary files
-+*.log
-+*.exe
-+edgexsecurity
->>>>>>> removed binary file and log files that don't need to check in
+*.log
+*.exe
+edgexsecurity
