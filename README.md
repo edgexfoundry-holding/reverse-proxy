@@ -13,7 +13,7 @@ The security service will need KONG ( https://konghq.com/) and Vault (https://ww
 ```
 go get github.com/edgexfoundry/edgexsecurity
 cd edgexsecurity/core
-go buld -o edgexsecurity
+go build -o edgexsecurity
 ```
 4. Create res folder in the same folder as executable and copy configuration.toml
 5. Modify the parameters in the configuration.toml file. Make sure the information for the KONG service, Vault service and Edgex microservices are correct
@@ -44,6 +44,7 @@ go buld -o edgexsecurity
 
 #delete account
 ./edgexsecurity userdel=guest
+```
 
 # to access exisitng microservices API like ping service of command microservice
 ```
