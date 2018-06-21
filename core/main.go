@@ -65,7 +65,7 @@ func main() {
 	}
 
 	proxyBaseURL := fmt.Sprintf("http://%s:%s/", config.KongURL.Server, config.KongURL.AdminPort)
-	secretServiceBaseURL := fmt.Sprintf("http://%s:%s/", config.SecretService.Server, config.SecretService.Port)
+	secretServiceBaseURL := fmt.Sprintf("https://%s:%s/", config.SecretService.Server, config.SecretService.Port)
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: *insecureSkipVerify},
