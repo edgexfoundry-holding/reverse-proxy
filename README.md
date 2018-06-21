@@ -48,9 +48,9 @@ docker run --network=edgex-network edgex/proxy --userdel=<account>
 ### Access existing microservice APIs like ping service of command microservice
 ```
 use JWT as query string 
-curl -k -v https://kong-container:8443/command/api/v1/ping?jwt= <JWT from account creation>
+curl -k -v -H "host: edgex" https://kong-container:8443/command/api/v1/ping?jwt= <JWT from account creation>
 or use JWT in HEADER
-curl -k -v https://kong-container:8443/command/api/v1/ping -H "Authorization: Bearer <JWT from account creation>"
+curl -k -v -H "host: edgex" https://kong-container:8443/command/api/v1/ping -H "Authorization: Bearer <JWT from account creation>"
 
 ```
 
@@ -109,9 +109,9 @@ Docker cp <vault-container-id>:/vault/config/resp-init.json <path-to-res>/
 ### Access exisitng microservices APIs like ping service of command microservice
 ```
 use JWT as query string 
-curl -k -v https://kong-ip:8443/command/api/v1/ping?jwt= <JWT from account creation>
+curl -k -v -H "host: edgex" https://kong-ip:8443/command/api/v1/ping?jwt= <JWT from account creation>
 or use JWT in HEADER
-curl -k -v https://kong-ip:8443/command/api/v1/ping -H "Authorization: Bearer <JWT from account creation>"
+curl -k -v -H "host: edgex" https://kong-ip:8443/command/api/v1/ping -H "Authorization: Bearer <JWT from account creation>"
 ``` 
 
 
