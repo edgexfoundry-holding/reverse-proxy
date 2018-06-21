@@ -27,6 +27,7 @@ type KongService struct {
 
 type KongRoute struct {
 	Paths []string `url:"paths[],omitempty"`
+	Hosts []string `url:"hosts[],omitempty"`
 }
 
 type KongPlugin struct {
@@ -43,13 +44,13 @@ type KongUser struct {
 	Password string `url:"password,omitempty"`
 }
 
-type Data struct {
-	Cert string
-	Key  string
+type CertPair struct {
+	Cert string `json:"cert,omitempty"`
+	Key  string `json:"key,omitempty"`
 }
 
-type Cert struct {
-	Data Data
+type CertCollect struct {
+	Section CertPair `json:"data"`
 }
 
 type CertInfo struct {

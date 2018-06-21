@@ -23,7 +23,7 @@ import (
 	"github.com/dghubble/sling"
 )
 
-func initSecurityServices(config *tomlConfig, baseURL string, client *http.Client) {
+func initSecurityServices(config *tomlConfig, baseURL string, secretBaseURL string, client *http.Client) {
 	for _, service := range config.EdgexServices {
 		serviceParams := &KongService{
 			Name:     service.Name,
@@ -40,13 +40,17 @@ func initSecurityServices(config *tomlConfig, baseURL string, client *http.Clien
 	for _, service := range config.EdgexServices {
 		routeParams := &KongRoute{
 			Paths: []string{"/" + service.Name},
+			Hosts: []string{EdgeXService},
 		}
 		routePath := fmt.Sprintf("%s%s/%s", ServicesPath, service.Name, RoutesPath)
 		initKongRoutes(baseURL, client, routeParams, routePath, service.Name)
 	}
 
 	initKongAdminInterface(config, baseURL, client)
-	//loadKongCerts(config, proxyBaseURL, client)
+	err := loadKongCerts(config, baseURL, secretBaseURL, client)
+	if err != nil {
+		lc.Error(err.Error())
+	}
 	lc.Info("Finishing initialization for reverse proxy.")
 }
 

@@ -17,6 +17,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"flag"
 	"fmt"
 	"net/http"
@@ -39,6 +40,7 @@ func main() {
 		HelpCallback()
 	}
 	useConsul := flag.Bool("consul", false, "retrieve configuration from consul server")
+	insecureSkipVerify := flag.Bool("insureskipverify", true, "skip server side SSL verification, mainly for self-signed cert.")
 	initNeeded := flag.Bool("init", false, "run init procedure for security service.")
 	resetNeeded := flag.Bool("reset", false, "reset reverse proxy by removing all services/routes/consumers")
 	userTobeCreated := flag.String("useradd", "", "user that needs to be added to consume the edgex services")
@@ -49,7 +51,7 @@ func main() {
 
 	config, err := LoadTomlConfig("res/configuration.toml")
 	if err != nil {
-		lc.Error("Failed to retrieve config data from local file")
+		lc.Error("Failed to retrieve config data from local file. Please make sure res/configuration.toml file exists with correct formats.")
 		return
 	}
 
@@ -64,7 +66,11 @@ func main() {
 
 	proxyBaseURL := fmt.Sprintf("http://%s:%s/", config.KongURL.Server, config.KongURL.AdminPort)
 	secretServiceBaseURL := fmt.Sprintf("http://%s:%s/", config.SecretService.Server, config.SecretService.Port)
-	client := &http.Client{Timeout: 10 * time.Second}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: *insecureSkipVerify},
+	}
+	client := &http.Client{Timeout: 10 * time.Second, Transport: tr}
 
 	checkProxyStatus(proxyBaseURL, client)
 	checkSecretServiceStatus(secretServiceBaseURL+config.SecretService.HealthcheckPath, client)
@@ -75,7 +81,7 @@ func main() {
 	}
 
 	if *initNeeded == true {
-		initSecurityServices(config, proxyBaseURL, client)
+		initSecurityServices(config, proxyBaseURL, secretServiceBaseURL, client)
 	}
 
 	if *resetNeeded == true {

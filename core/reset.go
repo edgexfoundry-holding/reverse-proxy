@@ -21,7 +21,7 @@ import (
 )
 
 func resetProxy(url string, client *http.Client) {
-	paths := []string{RoutesPath, ServicesPath, ConsumersPath, PluginsPath}
+	paths := []string{RoutesPath, ServicesPath, ConsumersPath, PluginsPath, CertificatesPath}
 	for _, p := range paths {
 		d, err := getIDListFromEndpoint(url, p, client)
 		if err != nil {

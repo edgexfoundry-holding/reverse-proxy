@@ -14,29 +14,24 @@
  * @author: Tingyu Zeng, Dell
  * @version: 0.1.0
  *******************************************************************************/
+
 package main
 
 import (
-	"fmt"
-	"os"
+	"encoding/json"
+	"io/ioutil"
 )
 
-var usageStr = `
-Usage: %s [options]
-Server Options:
-	--consul=true/false				Indicates if retrieving config from Consul
-	--insureskipverify=true/false			Indicates if skipping the server side SSL cert verifcation, similar to -k of curl
-	--init=true/false				Indicates if security service should be initialized
-	--reset=true/false				Indicate if security service should be reset to initialization status
-	--useradd=<username>				Create an account and return JWT
-	--userdel=<username>				Delete an account		
-	Common Options:
-	-h, --help					Show this message
-`
+type Secret struct {
+	Token string `json:"root_token"`
+}
 
-// 	Print out the flag options for the server.
-func HelpCallback() {
-	msg := fmt.Sprintf(usageStr, os.Args[0])
-	fmt.Printf("%s\n", msg)
-	os.Exit(0)
+func getSecret(filename string) (Secret, error) {
+	s := Secret{}
+	raw, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return s, err
+	}
+	err = json.Unmarshal(raw, &s)
+	return s, err
 }

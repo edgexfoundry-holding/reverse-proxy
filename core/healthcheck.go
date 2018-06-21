@@ -28,13 +28,13 @@ func checkProxyStatus(url string, c *http.Client) {
 	req, err := sling.New().Get(url).Request()
 	resp, err := c.Do(req)
 	if err != nil {
-		lc.Error("The status of reverse proxy is unknown, the initialization is terminated.")
+		lc.Error(fmt.Sprintf("The status of reverse proxy is unknown with error %s, the initialization is terminated.", err.Error()))
 		os.Exit(0)
 	} else {
 		if resp.StatusCode == 200 {
 			lc.Info("Reverse proxy is up successfully.")
 		} else {
-			lc.Error("The status of reverse proxy is unknown, the initialization is terminated.")
+			lc.Error(fmt.Sprintf("The status of reverse proxy is unknown with error code %d, the initialization is terminated.", resp.StatusCode))
 			os.Exit(0)
 		}
 	}
