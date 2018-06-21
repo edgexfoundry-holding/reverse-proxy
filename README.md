@@ -14,14 +14,14 @@ The security service will need KONG ( https://konghq.com/) and Vault (https://ww
 
 The repo includes a Dockerfile to dockerize the security service. A docker-compose-proxy.yml file is provided under Docker folder as well to make sure the security service is working with other existing services. They need to be ran in order from the top to bottom.
 
-# Build an image of the security service
+## Build an image of the security service
 ```
 go get github.com/edgexfoundry/edgexsecurity
 cd edgexsecurity
 Docker build -t edgex/proxy .
 ```
 
-# Run the security service
+## Run the security service
 ```
 docker run -v vault-config:/vault/config --network=edgex-network edgex/proxy
 ```
@@ -37,7 +37,7 @@ docker network ls
 docker network inspect <network_name>
 ```
 
-# other options for security service, E,g, reset the proxy to initial status, create account, delete account
+## other options for security service, E,g, reset the proxy to initial status, create account, delete account
 ```
 docker run --network=edgex-network edgex/proxy -h
 docker run --network=edgex-network edgex/proxy --reset=true
@@ -45,7 +45,7 @@ docker run --network=edgex-network edgex/proxy --useradd=<account>
 docker run --network=edgex-network edgex/proxy --userdel=<account>
 ```
 
-# Access existing microservice APIs like ping service of command microservice
+## Access existing microservice APIs like ping service of command microservice
 ```
 use JWT as query string 
 curl -k -v https://kong-container:8443/command/api/v1/ping?jwt= <JWT from account creation>
