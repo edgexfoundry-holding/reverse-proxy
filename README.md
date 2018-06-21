@@ -18,6 +18,8 @@ The repo includes a Dockerfile to dockerize the security service. A docker-compo
 ```
 go get github.com/edgexfoundry/edgexsecurity
 cd edgexsecurity
+.\build.bat # on Windows
+./build.sh # on Linux/Mac
 Docker build -t edgex/proxy .
 ```
 

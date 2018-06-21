@@ -1,20 +1,13 @@
-FROM golang:1.9-alpine AS builder
+FROM alpine:3.7
 
-RUN mkdir -p /edgexsecurity
+RUN mkdir -p /edgex/res
 
-WORKDIR /edgexsecurity
+WORKDIR /edgex
 
-COPY . .
+COPY Docker/res/configuration.toml res/
 
-RUN apk update && apk upgrade && apk add --no-cache  git
-
-RUN go get github.com/dghubble/sling && go get github.com/BurntSushi/toml && go get github.com/edgexfoundry/edgex-go/support/logging-client && go get github.com/dgrijalva/jwt-go
-
-RUN cd core && go build -o edgexproxy
-
-COPY Docker/res/configuration.toml core/res/
-
-WORKDIR core
+ADD core/edgexproxy .
 
 ENTRYPOINT ["./edgexproxy"]
+
 CMD  ["--init=true"]
