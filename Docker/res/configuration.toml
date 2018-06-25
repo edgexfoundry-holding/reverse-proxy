@@ -20,7 +20,7 @@
 title = "EdgeX security service config file"
 
 [kongurl]
-server = "localhost"
+server = "kong"
 adminport = "8001"
 applicationport = "8000"
 
@@ -29,11 +29,11 @@ username = "administrator"
 password = "changeme"
 
 [secretservice]
-server = "localhost"
+server = "edgex-vault"
 port = "8200"
 healthcheckpath = "v1/sys/health"
 certpath = "v1/secret/edgex/pki/tls/edgex-kong"
-tokenpath = "res\\resp-init.json"
+tokenpath = "/vault/config/resp-init.json"
 snis = "edgex.com"
 
 [edgexservices]

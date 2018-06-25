@@ -44,7 +44,7 @@ type secretservice struct {
 	Port            string
 	HealthcheckPath string
 	CertPath        string
-	Token           string
+	TokenPath       string
 	SNIS            string
 }
 
